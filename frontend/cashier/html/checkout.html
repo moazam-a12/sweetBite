@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cashier Checkout | SweetBite</title>
+
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/cashier.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="cashier-navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-brand">SweetBite</a>
+      <div class="navbar-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="history.html">Order History</a>
+        <a href="../../index.html">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container-main">
+
+    <h1 class="section-title">New Checkout</h1>
+
+    <!-- CUSTOMER INFO -->
+    <p id="customerInfo"
+       style="text-align:center;margin-bottom:32px;color:var(--apple-gray);">
+    </p>
+
+    <div class="checkout-layout">
+
+      <!-- PRODUCTS -->
+      <section class="products-section">
+        <h3 style="margin-bottom:16px;">Products</h3>
+        <div id="productsGrid" class="products-grid"></div>
+      </section>
+
+      <!-- CART -->
+      <aside class="cart-section">
+
+        <h3 style="margin-bottom:16px;">Current Order</h3>
+
+        <div id="cartItems" class="cart-items"></div>
+
+        <!-- TOTAL -->
+        <div id="cartTotal" class="cart-total" style="display:none;">
+          <div class="cart-total-row">
+            <span>Total</span>
+            <span id="totalAmount">RS0.00</span>
+          </div>
+        </div>
+
+        <!-- PAYMENT -->
+        <div id="paymentSection" class="payment-checkbox" style="display:none;">
+          <input type="checkbox" id="paymentCollected" />
+          <label for="paymentCollected">Payment collected</label>
+        </div>
+
+        <!-- ACTIONS -->
+        <div style="display:flex;gap:12px;">
+          <button class="btn-outline" onclick="window.location.href='dashboard.html'">
+            Cancel
+          </button>
+          <button id="completeBtn"
+                  class="btn-apple"
+                  style="display:none;"
+                  onclick="completeOrder()">
+            Complete Order
+          </button>
+        </div>
+
+      </aside>
+    </div>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="../../js/api.js"></script>
+  <script src="../../js/cashier.js"></script>
+
+</body>
+</html>

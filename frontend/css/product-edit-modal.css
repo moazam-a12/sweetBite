@@ -1,0 +1,404 @@
+/* Product Edit Modal Styles - Coffee Brown Icons */
+
+.product-edit-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.product-edit-overlay.active {
+  display: flex;
+}
+
+.product-edit-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 700px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 600;
+  color: var(--apple-dark);
+}
+
+.close-modal-btn {
+  background: none;
+  border: none;
+  font-size: 1.8rem;
+  color: var(--apple-gray);
+  cursor: pointer;
+  width: 36px;
+  height: 36px;
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.close-modal-btn:hover {
+  background: var(--apple-light);
+  color: var(--apple-dark);
+}
+
+/* Image Upload Section */
+.image-upload-section {
+  margin-bottom: 32px;
+}
+
+.image-upload-label {
+  font-size: 0.9rem;
+  font-weight: 500;
+  color: var(--apple-gray);
+  margin-bottom: 12px;
+  display: block;
+}
+
+.product-image-container {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  margin: 0 auto;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition);
+}
+
+.product-image-container.has-image:hover {
+  transform: scale(1.02);
+}
+
+/* Icon Fallback - COFFEE BROWN */
+.product-image-icon {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6F4E37, #8B6F47); /* Coffee brown gradient */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transition: var(--transition);
+  border: 2px dashed transparent;
+}
+
+.product-image-icon:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #7F5E47, #9B7F57); /* Lighter coffee on hover */
+}
+
+.product-image-icon.editing {
+  background: linear-gradient(135deg, #6F4E37, #8B6F47); /* Coffee brown */
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.product-image-icon svg {
+  width: 80px;
+  height: 80px;
+  fill: white;
+  opacity: 0.9;
+}
+
+.product-image-icon:hover svg {
+  opacity: 1;
+}
+
+/* Product Image Display */
+.product-image-display {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Remove Image Button (appears on hover) */
+.remove-image-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: none;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 16px;
+  border-radius: 16px;
+  transition: var(--transition);
+  pointer-events: none; /* Allow clicks to pass through */
+}
+
+.product-image-container-large.has-image:hover .remove-image-overlay {
+  display: flex;
+  pointer-events: auto; /* Re-enable clicks on overlay when visible */
+}
+
+.remove-image-btn {
+  background: rgba(198, 40, 40, 0.95);
+  color: white;
+  border: none;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  font-size: 1.5rem;
+  line-height: 1;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  pointer-events: auto; /* Ensure button is clickable */
+}
+
+.remove-image-btn:hover {
+  background: #c62828;
+  transform: scale(1.1);
+}
+
+/* Hidden file input */
+.image-file-input {
+  display: none;
+}
+
+/* Upload hint text */
+.upload-hint {
+  margin-top: 12px;
+  font-size: 0.85rem;
+  color: var(--apple-gray);
+  text-align: center;
+}
+
+/* Form Grid */
+.modal-form-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+  margin-bottom: 24px;
+}
+
+.modal-form-grid .form-group {
+  margin-bottom: 0;
+}
+
+.modal-form-grid .full-width {
+  grid-column: 1 / -1;
+}
+
+/* Modal Actions */
+.modal-actions {
+  display: flex;
+  gap: 12px;
+  margin-top: 32px;
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+}
+
+.modal-actions button {
+  flex: 1;
+}
+
+/* Loading State */
+.product-image-container.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 40px;
+  height: 40px;
+  border: 3px solid rgba(255, 255, 255, 0.3);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: translate(-50%, -50%) rotate(360deg); }
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-edit-modal {
+    padding: 24px;
+    max-height: 95vh;
+  }
+
+  .modal-form-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .product-image-container {
+    width: 160px;
+    height: 160px;
+  }
+
+  .product-image-icon svg {
+    width: 60px;
+    height: 60px;
+  }
+}
+
+/* LARGE IMAGE UPLOAD - Coffee Brown */
+.product-image-container-large {
+  position: relative; /* IMPORTANT - ensures overlay is positioned correctly */
+  width: 100%;
+  height: 280px;
+  cursor: pointer;
+  border-radius: 16px;
+  overflow: hidden;
+  transition: var(--transition);
+  margin-bottom: 12px;
+}
+
+.product-image-container-large.drag-over {
+  transform: scale(1.02);
+  box-shadow: 0 0 0 3px var(--apple-blue);
+}
+
+.product-image-container-large.has-image:hover {
+  transform: scale(1.01);
+}
+
+.image-preview {
+    display: none;
+    position: relative;
+    margin-top: 12px;
+}
+
+.image-preview img {
+    max-width: 100%;
+    border-radius: 10px;
+}
+
+
+/* Icon Fallback - Large Version - COFFEE BROWN */
+.product-image-icon-large {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #6F4E37, #8B6F47); /* Coffee brown */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  border-radius: 16px;
+  transition: var(--transition);
+  border: 2px dashed transparent;
+  gap: 16px;
+}
+
+.product-image-icon-large:hover {
+  border-color: rgba(255, 255, 255, 0.3);
+  background: linear-gradient(135deg, #7F5E47, #9B7F57); /* Lighter coffee on hover */
+}
+
+.product-image-icon-large.editing {
+  background: linear-gradient(135deg, #6F4E37, #8B6F47); /* Coffee brown */
+  border-color: rgba(255, 255, 255, 0.2);
+}
+
+.product-image-icon-large svg {
+  width: 80px;
+  height: 80px;
+  fill: white;
+  opacity: 0.9;
+  transition: var(--transition);
+}
+
+.product-image-icon-large:hover svg {
+  opacity: 1;
+}
+
+.upload-text {
+  color: rgba(255, 255, 255, 0.9);
+  font-size: 1.1rem;
+  font-weight: 500;
+  margin: 0;
+  transition: var(--transition);
+}
+
+.product-image-icon-large:hover .upload-text {
+  color: white;
+}
+
+/* Product Image Display - Large */
+.product-image-display-large {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 16px;
+}
+
+/* Drag over */
+.product-image-container-large.drag-over .product-image-icon-large {
+  border-color: var(--apple-blue);
+  background: linear-gradient(135deg, #7F5E47, #9B7F57);
+}
+
+/* Loading state */
+.product-image-container-large.loading::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border: 4px solid rgba(255, 255, 255, 0.2);
+  border-top-color: white;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .product-image-container-large {
+    height: 220px;
+  }
+
+  .product-image-icon-large svg {
+    width: 60px;
+    height: 60px;
+  }
+
+  .upload-text {
+    font-size: 1rem;
+  }
+}

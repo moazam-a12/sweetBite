@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inventory Management | SweetBite</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/manager.css">
+    <link rel="stylesheet" href="../../css/inventory.css">
+    <link rel="stylesheet" href="../../css/product-edit-modal.css">
+</head>
+
+<body>
+
+    <nav class="manager-navbar">
+        <div class="navbar-inner">
+            <a href="dashboard.html" class="navbar-brand">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    style="width:24px;height:24px;fill:currentColor;">
+                    <path
+                        d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z" />
+                </svg>
+                SweetBite Manager
+            </a>
+            <div class="navbar-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="inventory.html">Inventory</a>
+                <a href="users.html">Users</a>
+                <a href="order-management.html">Orders</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="../../index.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-banner">
+        <h1>Inventory Management</h1>
+        <p>Manage products, stock levels, and pricing</p>
+    </section>
+
+    <div class="container-main">
+        <div class="data-table-container">
+            <div class="table-header">
+                <h3 class="table-title">All Products</h3>
+                <button id="openAddModal" class="btn-apple">Add New Product</button>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th style="width:20%;">Product</th>
+                        <th style="width:10%;">Price</th>
+                        <th style="width:20%;">Description</th>
+                        <th style="width:10%;">Quantity</th>
+                        <th style="width:12%;">Expiry</th>
+                        <th style="width:10%;">Status</th>
+                        <th style="width:18%;">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="productsBody"></tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add Product Modal -->
+    <div class="user-modal-overlay" id="addProductModal">
+        <div class="user-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New Product</h2>
+                <button class="close-btn" id="closeAddModal">&times;</button>
+            </div>
+            <form id="addProductForm" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" id="productName" class="form-control" placeholder="Chocolate Lava Cake" required>
+                    <div class="invalid-feedback">Product name is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Price (RS)</label>
+                    <input type="number" id="price" class="form-control" step="0.01" min="0" placeholder="0.00"
+                        required>
+                    <div class="invalid-feedback">Price is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="description" class="form-control" rows="3" placeholder="Brief description"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Product Image (Optional)</label>
+
+                    <div class="image-upload-area">
+                        <input type="file" id="productImage" class="image-input" accept="image/*" hidden>
+
+                        <div class="upload-placeholder" onclick="document.getElementById('productImage').click()">
+                            <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                                style="width:48px;height:48px;fill:var(--apple-gray);margin-bottom:12px;">
+                                <path
+                                    d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                            </svg>
+                            <p>Click to upload or drag & drop</p>
+                            <small>PNG, JPG, WebP up to 5MB</small>
+                        </div>
+
+                        <div class="image-preview" style="display:none;">
+                            <img id="addImagePreview" alt="Preview">
+                            <button type="button" class="remove-image-btn" onclick="removeImagePreview()">×</button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="category" class="form-control">
+                        <option value="Dessert">Dessert</option>
+                        <option value="Cake">Cake</option>
+                        <option value="Pastry">Pastry</option>
+                        <option value="Ice Cream">Ice Cream</option>
+                        <option value="Beverage">Beverage</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" min="0" placeholder="0" required>
+                    <div class="invalid-feedback">Quantity is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Unit</label>
+                    <select id="unit" class="form-control">
+                        <option value="pcs">Pieces (pcs)</option>
+                        <option value="kg">Kilograms (kg)</option>
+                        <option value="liters">Liters</option>
+                        <option value="packs">Packs</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Expiry Date (Optional)</label>
+                    <input type="date" id="expiryDate" class="form-control">
+                </div>
+
+                <button type="submit" class="btn-apple" style="width:100%;margin-top:16px;">Add Product</button>
+                <div id="successAlert" class="success-alert d-none" style="display:none;">Product added successfully! ✓
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/authGuard.js"></script>
+    <script src="../../js/manager.js"></script>
+    <script src="../../js/inventory.js"></script>
+    <script src="../../js/product-edit-modal.js"></script>
+    <script>
+        // Modal Handling
+        const addModal = document.getElementById('addProductModal');
+        document.getElementById('openAddModal').addEventListener('click', () => {
+            addModal.style.display = 'flex';
+        });
+        document.getElementById('closeAddModal').addEventListener('click', () => {
+            addModal.style.display = 'none';
+        });
+        window.addEventListener('click', e => {
+            if (e.target === addModal) addModal.style.display = 'none';
+        });
+    </script>
+    <script>
+        document.getElementById('productImage').addEventListener('change', function (e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const preview = document.getElementById('addImagePreview');
+            const previewContainer = preview.parentElement;
+            const placeholder = document.querySelector('.upload-placeholder');
+
+            const reader = new FileReader();
+            reader.onload = function (e) {
+                preview.src = e.target.result;
+                previewContainer.style.display = 'flex';
+                placeholder.style.display = 'none';
+            };
+
+            reader.readAsDataURL(file);
+        });
+
+        function removeImagePreview() {
+            const input = document.getElementById('productImage');
+            const preview = document.getElementById('addImagePreview');
+            const previewContainer = preview.parentElement;
+            const placeholder = document.querySelector('.upload-placeholder');
+
+            input.value = '';
+            preview.src = '';
+            previewContainer.style.display = 'none';
+            placeholder.style.display = 'flex';
+        }
+    </script>
+</body>
+
+</html>

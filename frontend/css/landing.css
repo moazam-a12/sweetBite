@@ -1,0 +1,214 @@
+/* Landing Page - Apple Minimalist Style */
+
+body {
+  background: var(--apple-white);
+  overflow-x: hidden;
+}
+
+/* =========================
+   NAVBAR
+========================= */
+
+.navbar-apple {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  background: rgba(251,251,253,0.8);
+  backdrop-filter: saturate(180%) blur(20px);
+  -webkit-backdrop-filter: saturate(180%) blur(20px);
+  border-bottom: 1px solid var(--border);
+  padding: 16px 0;
+  z-index: 1000;
+}
+
+.navbar-content {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.navbar-brand {
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--apple-dark);
+  text-decoration: none;
+  letter-spacing: -0.02em;
+}
+
+/* =========================
+   HERO SECTION
+========================= */
+
+.hero-section {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 120px 20px 80px;
+  background: linear-gradient(135deg, #ffffff 0%, #f5f5f7 100%);
+}
+
+.hero-title {
+  font-size: 4rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 1rem;
+
+  background: linear-gradient(135deg, #1d1d1f 0%, #86868b 100%);
+  background-clip: text;
+  -webkit-background-clip: text;
+
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+
+  animation: fadeInUp 0.8s ease;
+}
+
+.hero-subtitle {
+  font-size: 1.4rem;
+  color: var(--apple-gray);
+  margin-bottom: 2.5rem;
+  max-width: 600px;
+  animation: fadeInUp 0.8s ease 0.2s both;
+}
+
+/* =========================
+   HERO ACTION BUTTONS
+========================= */
+
+.hero-actions {
+  display: flex;
+  gap: 16px;
+  animation: fadeInUp 0.8s ease 0.4s both;
+}
+
+.hero-actions .btn-apple {
+  padding: 14px 28px;
+  font-size: 1rem;
+  min-width: 140px;
+}
+
+.hero-actions .btn-apple.primary {
+  background: var(--apple-blue);
+  color: white;
+}
+
+.hero-actions .btn-apple.primary:hover {
+  background: #005dd1;
+}
+
+.hero-actions .btn-apple.secondary {
+  background: transparent;
+  border: 1px solid var(--apple-blue);
+  color: var(--apple-blue);
+}
+
+.hero-actions .btn-apple.secondary:hover {
+  background: rgba(0, 122, 255, 0.08);
+}
+
+/* =========================
+   (LEGACY) ROLES SECTION
+   Safe to remove later
+========================= */
+
+.roles-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 40px 20px 80px;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 24px;
+}
+
+.role-card {
+  background: white;
+  border-radius: 20px;
+  padding: 40px 30px;
+  text-align: center;
+  border: 1px solid var(--border);
+  transition: var(--transition);
+  cursor: pointer;
+  position: relative;
+  overflow: hidden;
+}
+
+.role-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 4px;
+  background: var(--apple-blue);
+  transform: scaleX(0);
+  transition: var(--transition);
+}
+
+.role-card:hover::before {
+  transform: scaleX(1);
+}
+
+.role-card:hover {
+  box-shadow: var(--shadow-lg);
+  transform: translateY(-8px);
+  border-color: var(--apple-blue);
+}
+
+.role-icon {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  color: var(--apple-blue);
+}
+
+.role-title {
+  font-size: 1.4rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  color: var(--apple-dark);
+}
+
+.role-description {
+  font-size: 0.95rem;
+  color: var(--apple-gray);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* =========================
+   FOOTER
+========================= */
+
+.footer-apple {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--apple-gray);
+  font-size: 0.9rem;
+  border-top: 1px solid var(--border);
+  background: var(--apple-light);
+}
+
+/* =========================
+   RESPONSIVE
+========================= */
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 2.5rem;
+  }
+
+  .hero-subtitle {
+    font-size: 1.1rem;
+  }
+
+  .hero-actions {
+    flex-direction: column;
+    width: 100%;
+    max-width: 260px;
+  }
+}

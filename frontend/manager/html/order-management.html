@@ -1,0 +1,699 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Order Management | SweetBite</title>
+<link rel="stylesheet" href="../../css/global.css">
+<link rel="stylesheet" href="../../css/manager.css">
+<style>
+/* Order Edit Modal Styles */
+.order-edit-modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.5);
+  backdrop-filter: blur(8px);
+  z-index: 9999;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.order-edit-modal {
+  background: white;
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 900px;
+  width: 100%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+  animation: slideUp 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  margin: auto;
+}
+
+.edit-section {
+  margin-bottom: 32px;
+  padding-bottom: 32px;
+  border-bottom: 1px solid var(--border);
+}
+
+.edit-section:last-child {
+  border-bottom: none;
+}
+
+.edit-section-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 16px;
+  color: var(--apple-dark);
+}
+
+.order-items-list {
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.order-item-row {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 80px 40px;
+  gap: 12px;
+  padding: 12px;
+  border-bottom: 1px solid var(--border);
+  align-items: center;
+}
+
+.order-item-row:last-child {
+  border-bottom: none;
+}
+
+.order-item-row:nth-child(even) {
+  background: var(--apple-light);
+}
+
+.item-total {
+  text-align: right;
+  font-weight: 600;
+}
+
+.btn-remove {
+  background: transparent;
+  border: none;
+  color: #c62828;
+  cursor: pointer;
+  font-size: 1.2rem;
+  width: 32px;
+  height: 32px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: var(--transition);
+}
+
+.btn-remove:hover {
+  background: #ffebee;
+}
+
+.add-item-section {
+  background: var(--apple-light);
+  border-radius: 12px;
+  padding: 16px;
+  margin-top: 16px;
+}
+
+.add-item-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr auto;
+  gap: 12px;
+  align-items: end;
+}
+
+.order-total-display {
+  background: linear-gradient(135deg, var(--apple-blue), var(--apple-hover));
+  color: white;
+  padding: 20px;
+  border-radius: 12px;
+  text-align: center;
+  margin-top: 16px;
+}
+
+.order-total-display .label {
+  font-size: 0.9rem;
+  opacity: 0.9;
+  margin-bottom: 4px;
+}
+
+.order-total-display .value {
+  font-size: 2rem;
+  font-weight: 700;
+}
+
+.filter-input {
+  flex: 1;
+  min-width: 180px;
+}
+
+@media (max-width: 768px) {
+  .order-item-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+  
+  .add-item-grid {
+    grid-template-columns: 1fr;
+  }
+}
+</style>
+</head>
+<body>
+<nav class="manager-navbar">
+<div class="navbar-inner">
+<a href="dashboard.html" class="navbar-brand">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:currentColor;">
+<path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z"/>
+</svg>
+        SweetBite Manager
+</a>
+<div class="navbar-links">
+<a href="dashboard.html">Dashboard</a>
+<a href="users.html">Users</a>
+<a href="inventory.html">Inventory</a>
+<a href="order-management.html">Orders</a>
+<a href="analytics.html">Analytics</a>
+<a href="../../index.html">Logout</a>
+</div>
+</div>
+</nav>
+
+<div class="container-main">
+<h2 class="section-title">Order Management</h2>
+
+<div class="filters-bar">
+<div class="filter-group filter-input">
+<label class="form-label">Status</label>
+<select id="statusFilter" class="form-control" onchange="loadOrders()">
+<option value="all">All Statuses</option>
+<option value="Pending">Pending</option>
+<option value="Preparing">Preparing</option>
+<option value="Ready">Ready</option>
+<option value="Picked Up">Picked Up</option>
+<option value="Out for Delivery">Out for Delivery</option>
+<option value="Delivered">Delivered</option>
+</select>
+</div>
+
+<div class="filter-group filter-input">
+<label class="form-label">Start Date</label>
+<input type="date" id="startDate" class="form-control" onchange="loadOrders()">
+</div>
+
+<div class="filter-group filter-input">
+<label class="form-label">End Date</label>
+<input type="date" id="endDate" class="form-control" onchange="loadOrders()">
+</div>
+
+<div class="filter-group filter-input">
+<label class="form-label">Customer Name</label>
+<input type="text" id="customerFilter" class="form-control" placeholder="Search customer..." onkeyup="loadOrders()">
+</div>
+
+<div class="filter-group filter-input">
+<label class="form-label">Item Name</label>
+<input type="text" id="itemFilter" class="form-control" placeholder="Search item..." onkeyup="loadOrders()">
+</div>
+
+<div class="filter-group">
+<button class="btn-outline" onclick="clearFilters()" style="width:100%;">Clear Filters</button>
+</div>
+</div>
+
+<div id="ordersContainer"></div>
+</div>
+
+<!-- Order Edit Modal -->
+<div id="orderEditModal" class="order-edit-modal-overlay">
+<div class="order-edit-modal">
+<div class="modal-header">
+<h3 class="modal-title" id="editModalTitle">Edit Order</h3>
+<button class="close-btn" onclick="closeEditModal()">×</button>
+</div>
+
+<form id="editOrderForm">
+<input type="hidden" id="editOrderId">
+
+<!-- Order Items Section -->
+<div class="edit-section">
+<div class="edit-section-title">Order Items</div>
+<div class="order-items-list" id="editOrderItems"></div>
+
+<div class="add-item-section">
+<div class="edit-section-title" style="margin-bottom:12px;font-size:0.95rem;">Add Item</div>
+<div class="add-item-grid">
+<select id="addItemProduct" class="form-control">
+<option value="">Select Product...</option>
+</select>
+<input type="number" id="addItemQty" class="form-control" placeholder="Qty" min="1" value="1">
+<input type="number" id="addItemPrice" class="form-control" placeholder="Price" step="0.01" min="0" readonly>
+<button type="button" class="btn-apple" onclick="addItemToOrder()">Add</button>
+</div>
+</div>
+
+<div class="order-total-display">
+<div class="label">Order Total</div>
+<div class="value" id="editOrderTotal">RS0.00</div>
+</div>
+</div>
+
+<!-- Customer & Delivery Section -->
+<div class="edit-section">
+<div class="edit-section-title">Delivery Information</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+<div class="form-group">
+<label class="form-label">Customer Name</label>
+<input type="text" id="editShippingName" class="form-control">
+</div>
+<div class="form-group">
+<label class="form-label">Phone</label>
+<input type="tel" id="editShippingPhone" class="form-control">
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label">Address Line 1</label>
+<input type="text" id="editShippingAddr1" class="form-control">
+</div>
+
+<div class="form-group">
+<label class="form-label">Address Line 2</label>
+<input type="text" id="editShippingAddr2" class="form-control">
+</div>
+
+<div style="display:grid;grid-template-columns:2fr 1fr;gap:16px;">
+<div class="form-group">
+<label class="form-label">City</label>
+<input type="text" id="editShippingCity" class="form-control">
+</div>
+<div class="form-group">
+<label class="form-label">Postal Code</label>
+<input type="text" id="editShippingPostal" class="form-control">
+</div>
+</div>
+
+<div class="form-group">
+<label class="form-label">Delivery Notes</label>
+<textarea id="editShippingNotes" class="form-control" rows="2"></textarea>
+</div>
+</div>
+
+<!-- Order Status Section -->
+<div class="edit-section">
+<div class="edit-section-title">Order Status</div>
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;">
+<div class="form-group">
+<label class="form-label">Status</label>
+<select id="editOrderStatus" class="form-control">
+<option value="Pending">Pending</option>
+<option value="Preparing">Preparing</option>
+<option value="Ready">Ready</option>
+<option value="Picked Up">Picked Up</option>
+<option value="Out for Delivery">Out for Delivery</option>
+<option value="Delivered">Delivered</option>
+</select>
+</div>
+<div class="form-group">
+<label class="form-label">Payment Status</label>
+<select id="editPaymentStatus" class="form-control">
+<option value="false">Not Collected</option>
+<option value="true">Collected</option>
+</select>
+</div>
+</div>
+</div>
+
+<div style="display:flex;gap:12px;margin-top:24px;">
+<button type="submit" class="btn-apple" style="flex:1;">Save Changes</button>
+<button type="button" class="btn-outline" style="flex:1;" onclick="closeEditModal()">Cancel</button>
+</div>
+</form>
+</div>
+</div>
+
+<script src="../../js/api.js"></script>
+<script src="../../js/authGuard.js"></script>
+<script>
+// Protect this page
+if (typeof requireRole === 'function') {
+  requireRole('manager', 'admin');
+}
+
+let allOrders = [];
+let availableProducts = [];
+let currentEditOrder = null;
+
+document.addEventListener('DOMContentLoaded', async () => {
+  await loadProducts();
+  await loadOrders();
+  document.querySelector('#editOrderForm').addEventListener('submit', handleSaveOrder);
+  document.querySelector('#addItemProduct').addEventListener('change', updateAddItemPrice);
+});
+
+async function loadProducts() {
+  try {
+    availableProducts = await API.getStock();
+    const select = document.querySelector('#addItemProduct');
+    select.innerHTML = '<option value="">Select Product...</option>' +
+      availableProducts.map(p => `
+        <option value="${p._id}" data-price="${p.price}" data-name="${p.name}">
+          ${p.name} - RS${p.price.toFixed(2)}
+        </option>
+      `).join('');
+  } catch (error) {
+    console.error('Error loading products:', error);
+  }
+}
+
+function updateAddItemPrice() {
+  const select = document.querySelector('#addItemProduct');
+  const priceInput = document.querySelector('#addItemPrice');
+  const option = select.options[select.selectedIndex];
+  if (option && option.dataset.price) {
+    priceInput.value = parseFloat(option.dataset.price).toFixed(2);
+  } else {
+    priceInput.value = '';
+  }
+}
+
+async function loadOrders() {
+  const container = document.querySelector('#ordersContainer');
+  if (!container) return;
+  
+  const statusFilter = document.querySelector('#statusFilter')?.value || 'all';
+  const startDate = document.querySelector('#startDate')?.value || '';
+  const endDate = document.querySelector('#endDate')?.value || '';
+  const customerFilter = document.querySelector('#customerFilter')?.value.toLowerCase() || '';
+  const itemFilter = document.querySelector('#itemFilter')?.value.toLowerCase() || '';
+
+  try {
+    let url = 'http://localhost:5001/api/manager/orders/all?';
+    
+    if (statusFilter !== 'all') url += `status=${statusFilter}&`;
+    if (startDate) url += `startDate=${startDate}&`;
+    if (endDate) url += `endDate=${endDate}&`;
+
+    const response = await fetch(url, {
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+    
+    if (!response.ok) throw new Error('Failed to load orders');
+    
+    allOrders = await response.json();
+
+    // Apply client-side filters
+    let filteredOrders = allOrders;
+    
+    if (customerFilter) {
+      filteredOrders = filteredOrders.filter(order => 
+        (order.customerId?.name || '').toLowerCase().includes(customerFilter) ||
+        (order.customerId?.email || '').toLowerCase().includes(customerFilter)
+      );
+    }
+    
+    if (itemFilter) {
+      filteredOrders = filteredOrders.filter(order =>
+        order.items.some(item => item.name.toLowerCase().includes(itemFilter))
+      );
+    }
+
+    if (!filteredOrders.length) {
+      container.innerHTML = `
+        <div class="empty-state">
+          <div class="empty-state-icon">📦</div>
+          <h3>No orders found</h3>
+          <p>Try adjusting your filters</p>
+        </div>`;
+      return;
+    }
+
+    container.innerHTML = filteredOrders.map(order => `
+      <div class="order-card">
+        <div class="order-header">
+          <div>
+            <div class="order-id">${order.orderId}</div>
+            <div class="order-meta">
+              ${order.customerId ? `${order.customerId.name} (${order.customerId.email})` : 'Guest'}
+            </div>
+          </div>
+          <span class="badge badge-info">${order.status}</span>
+        </div>
+
+        <div class="order-details">
+          <div class="order-detail-item">
+            <strong>Date:</strong> ${new Date(order.createdAt).toLocaleString()}
+          </div>
+          <div class="order-detail-item">
+            <strong>Items:</strong> ${order.items.length}
+          </div>
+          <div class="order-detail-item">
+            <strong>Total:</strong> RS${order.total.toFixed(2)}
+          </div>
+          <div class="order-detail-item">
+            <strong>Payment:</strong> ${order.paymentCollected ? '✓ Collected' : '✗ Pending'}
+          </div>
+        </div>
+
+        <div class="order-items">
+          <div class="order-items-title">ORDER ITEMS</div>
+          ${order.items.map(item => `
+            <div class="order-item">
+              <span>${item.name} × ${item.qty}</span>
+              <span>RS${(item.price * item.qty).toFixed(2)}</span>
+            </div>
+          `).join('')}
+        </div>
+
+        ${order.shipping.addr1 !== 'In-store pickup' ? `
+          <div class="order-items" style="margin-top:12px;">
+            <div class="order-items-title">DELIVERY ADDRESS</div>
+            <div style="font-size:0.9rem;line-height:1.6;color:var(--apple-dark);">
+              ${order.shipping.name}<br>
+              ${order.shipping.addr1}${order.shipping.addr2 ? ', ' + order.shipping.addr2 : ''}<br>
+              ${order.shipping.city}, ${order.shipping.postal}<br>
+              ${order.shipping.phone}
+            </div>
+          </div>
+        ` : ''}
+
+        <div class="order-actions">
+          <button class="btn-small btn-edit" onclick='openEditModal(${JSON.stringify(order).replace(/'/g, "&#39;")})'>
+            Edit Order
+          </button>
+          <button class="btn-small btn-delete-small" onclick="deleteOrder('${order._id}', '${order.orderId}')">
+            Delete
+          </button>
+        </div>
+      </div>
+    `).join('');
+
+  } catch (error) {
+    console.error('Error loading orders:', error);
+    container.innerHTML = `
+      <div class="empty-state">
+        <h3>Failed to load orders</h3>
+        <p>${error.message}</p>
+      </div>`;
+  }
+}
+
+function openEditModal(order) {
+  currentEditOrder = JSON.parse(JSON.stringify(order)); // Deep clone
+  
+  document.querySelector('#editModalTitle').textContent = `Edit Order ${order.orderId}`;
+  document.querySelector('#editOrderId').value = order._id;
+  document.querySelector('#editOrderStatus').value = order.status;
+  document.querySelector('#editPaymentStatus').value = order.paymentCollected.toString();
+  
+  // Shipping info
+  document.querySelector('#editShippingName').value = order.shipping.name || '';
+  document.querySelector('#editShippingPhone').value = order.shipping.phone || '';
+  document.querySelector('#editShippingAddr1').value = order.shipping.addr1 || '';
+  document.querySelector('#editShippingAddr2').value = order.shipping.addr2 || '';
+  document.querySelector('#editShippingCity').value = order.shipping.city || '';
+  document.querySelector('#editShippingPostal').value = order.shipping.postal || '';
+  document.querySelector('#editShippingNotes').value = order.shipping.notes || '';
+  
+  renderOrderItems();
+  document.querySelector('#orderEditModal').style.display = 'flex';
+}
+
+function renderOrderItems() {
+  const container = document.querySelector('#editOrderItems');
+  
+  if (!currentEditOrder.items.length) {
+    container.innerHTML = '<div style="padding:20px;text-align:center;color:var(--apple-gray);">No items in order</div>';
+    updateOrderTotal();
+    return;
+  }
+  
+  container.innerHTML = currentEditOrder.items.map((item, index) => `
+    <div class="order-item-row">
+      <input type="text" class="form-control" value="${item.name}" onchange="updateItemName(${index}, this.value)">
+      <input type="number" class="form-control" value="${item.price}" step="0.01" min="0" onchange="updateItemPrice(${index}, this.value)">
+      <input type="number" class="form-control" value="${item.qty}" min="1" onchange="updateItemQty(${index}, this.value)">
+      <div class="item-total">RS${(item.price * item.qty).toFixed(2)}</div>
+      <button type="button" class="btn-remove" onclick="removeItem(${index})">×</button>
+    </div>
+  `).join('');
+  
+  updateOrderTotal();
+}
+
+function updateItemName(index, name) {
+  currentEditOrder.items[index].name = name;
+}
+
+function updateItemPrice(index, price) {
+  currentEditOrder.items[index].price = parseFloat(price) || 0;
+  renderOrderItems();
+}
+
+function updateItemQty(index, qty) {
+  currentEditOrder.items[index].qty = parseInt(qty) || 1;
+  renderOrderItems();
+}
+
+function removeItem(index) {
+  if (currentEditOrder.items.length === 1) {
+    alert('Order must have at least one item');
+    return;
+  }
+  currentEditOrder.items.splice(index, 1);
+  renderOrderItems();
+}
+
+function addItemToOrder() {
+  const select = document.querySelector('#addItemProduct');
+  const qtyInput = document.querySelector('#addItemQty');
+  const priceInput = document.querySelector('#addItemPrice');
+  
+  if (!select.value) {
+    alert('Please select a product');
+    return;
+  }
+  
+  const option = select.options[select.selectedIndex];
+  const item = {
+    productId: select.value,
+    name: option.dataset.name,
+    price: parseFloat(priceInput.value) || 0,
+    qty: parseInt(qtyInput.value) || 1
+  };
+  
+  currentEditOrder.items.push(item);
+  renderOrderItems();
+  
+  // Reset
+  select.value = '';
+  qtyInput.value = '1';
+  priceInput.value = '';
+}
+
+function updateOrderTotal() {
+  const total = currentEditOrder.items.reduce((sum, item) => sum + (item.price * item.qty), 0);
+  document.querySelector('#editOrderTotal').textContent = `RS${total.toFixed(2)}`;
+}
+
+function closeEditModal() {
+  document.querySelector('#orderEditModal').style.display = 'none';
+  currentEditOrder = null;
+}
+
+async function handleSaveOrder(e) {
+  e.preventDefault();
+  
+  const orderId = document.querySelector('#editOrderId').value;
+  
+  const updatedOrder = {
+    items: currentEditOrder.items,
+    total: currentEditOrder.items.reduce((sum, item) => sum + (item.price * item.qty), 0),
+    status: document.querySelector('#editOrderStatus').value,
+    paymentCollected: document.querySelector('#editPaymentStatus').value === 'true',
+    shipping: {
+      name: document.querySelector('#editShippingName').value,
+      phone: document.querySelector('#editShippingPhone').value,
+      addr1: document.querySelector('#editShippingAddr1').value,
+      addr2: document.querySelector('#editShippingAddr2').value,
+      city: document.querySelector('#editShippingCity').value,
+      postal: document.querySelector('#editShippingPostal').value,
+      notes: document.querySelector('#editShippingNotes').value
+    }
+  };
+  
+  try {
+    const response = await fetch(`http://localhost:5001/api/manager/order/${orderId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${localStorage.getItem('token')}`
+      },
+      body: JSON.stringify(updatedOrder)
+    });
+    
+    if (!response.ok) throw new Error('Failed to update order');
+    
+    closeEditModal();
+    showSuccessMessage('Order updated successfully');
+    loadOrders();
+    
+  } catch (error) {
+    alert(error.message || 'Failed to update order');
+  }
+}
+
+async function deleteOrder(orderId, orderNumber) {
+  if (!confirm(`Delete order ${orderNumber}? This cannot be undone.`)) {
+    return;
+  }
+
+  try {
+    const response = await fetch(`http://localhost:5001/api/manager/order/${orderId}`, {
+      method: 'DELETE',
+      headers: { 'Authorization': `Bearer ${localStorage.getItem('token')}` }
+    });
+
+    if (!response.ok) throw new Error('Failed to delete order');
+
+    showSuccessMessage('Order deleted successfully');
+    loadOrders();
+
+  } catch (error) {
+    alert(error.message);
+  }
+}
+
+function clearFilters() {
+  document.querySelector('#statusFilter').value = 'all';
+  document.querySelector('#startDate').value = '';
+  document.querySelector('#endDate').value = '';
+  document.querySelector('#customerFilter').value = '';
+  document.querySelector('#itemFilter').value = '';
+  loadOrders();
+}
+
+function showSuccessMessage(message) {
+  const alert = document.createElement('div');
+  alert.className = 'success-notification';
+  alert.innerHTML = `
+    <div class="success-notification-icon">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+      </svg>
+    </div>
+    <div class="success-notification-content">
+      <div class="success-notification-title">Success</div>
+      <div class="success-notification-message">${message}</div>
+    </div>
+  `;
+  document.body.appendChild(alert);
+  setTimeout(() => alert.remove(), 3000);
+}
+
+window.openEditModal = openEditModal;
+window.closeEditModal = closeEditModal;
+window.updateItemName = updateItemName;
+window.updateItemPrice = updateItemPrice;
+window.updateItemQty = updateItemQty;
+window.removeItem = removeItem;
+window.addItemToOrder = addItemToOrder;
+window.deleteOrder = deleteOrder;
+window.clearFilters = clearFilters;
+window.loadOrders = loadOrders;
+</script>
+</body>
+</html>

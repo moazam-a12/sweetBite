@@ -1,0 +1,171 @@
+/* Auth Pages - Unified Style */
+
+.login-container {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--apple-light);
+  padding: 20px;
+}
+
+.login-card {
+  background: white;
+  border-radius: 20px;
+  padding: 48px;
+  max-width: 420px;
+  width: 100%;
+  box-shadow: var(--shadow);
+  border: 1px solid var(--border);
+}
+
+.login-header {
+  text-align: center;
+  margin-bottom: 32px;
+}
+
+.login-icon {
+  width: 64px;
+  height: 64px;
+  background: linear-gradient(135deg, var(--apple-blue), var(--apple-hover));
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 20px;
+}
+
+.login-icon svg {
+  width: 32px;
+  height: 32px;
+  fill: white;
+}
+
+.login-title {
+  font-size: 1.8rem;
+  font-weight: 700;
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.login-subtitle {
+  color: var(--apple-gray);
+  font-size: 0.95rem;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.password-hint {
+  font-size: 0.85rem;
+  color: var(--apple-gray);
+  margin-top: 6px;
+  line-height: 1.4;
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.password-toggle-btn {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--apple-gray);
+  transition: var(--transition);
+  z-index: 10;
+}
+
+.password-toggle-btn:hover {
+  color: var(--apple-dark);
+}
+
+.password-toggle-btn svg {
+  width: 20px;
+  height: 20px;
+  fill: currentColor;
+}
+
+.password-input-wrapper .form-control {
+  padding-right: 45px; /* Make room for eye icon */
+}
+
+.password-input-wrapper {
+  position: relative;
+}
+
+.change-password-toggle {
+  text-align: center;
+  margin: 20px 0;
+}
+
+.change-password-toggle button {
+  background: none;
+  border: none;
+  color: var(--apple-blue);
+  font-weight: 500;
+  font-size: 0.95rem;
+  cursor: pointer;
+  padding: 6px 12px;
+  border-radius: 6px;
+  transition: all 0.2s ease;
+}
+
+.change-password-toggle button:hover {
+  background: rgba(0, 122, 255, 0.08);
+  text-decoration: underline;
+}
+
+.error-alert {
+  background: #ffebee;
+  color: #c62828;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid rgba(198,40,40,0.2);
+}
+
+.success-alert {
+  background: #e8f5e9;
+  color: #2e7d32;
+  padding: 12px 16px;
+  border-radius: 10px;
+  margin-top: 16px;
+  font-size: 0.9rem;
+  text-align: center;
+  border: 1px solid rgba(46,125,50,0.2);
+}
+
+.login-footer {
+  text-align: center;
+  margin-top: 24px;
+  font-size: 0.9rem;
+  color: var(--apple-gray);
+}
+
+.login-footer a {
+  color: var(--apple-blue);
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.login-footer a:hover {
+  text-decoration: underline;
+}
+
+@media (max-width: 768px) {
+  .login-card {
+    padding: 32px 24px;
+  }
+}

@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Receipt | SweetBite</title>
+
+  <link rel="stylesheet" href="../../css/global.css" />
+  <link rel="stylesheet" href="../../css/cashier.css" />
+</head>
+<body>
+
+  <!-- NAVBAR -->
+  <nav class="cashier-navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-brand">SweetBite</a>
+      <div class="navbar-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="history.html">Order History</a>
+        <a href="../../index.html">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MAIN -->
+  <main class="container-main receipt-container">
+
+    <!-- This is REQUIRED for cashier.js -->
+    <div id="receiptContainer"></div>
+
+  </main>
+
+  <!-- SCRIPTS -->
+  <script src="../../js/api.js"></script>
+  <script src="../../js/cashier.js"></script>
+
+</body>
+</html>

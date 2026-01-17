@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>All Orders | SweetBite</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/chef.css">
+</head>
+<body>
+
+  <nav class="chef-navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-brand">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:currentColor;">
+          <path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z"/>
+        </svg>
+        SweetBite
+      </a>
+      <div class="navbar-links">
+        <a href="dashboard.html">Dashboard</a>
+        <a href="orders.html">All Orders</a>
+        <a href="history.html">History</a>
+        <a href="../../index.html">Logout</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-main">
+    <h2 class="section-title">All Active Orders</h2>
+    <div class="orders-grid" id="allOrdersGrid">
+      <!-- Orders will be loaded here -->
+    </div>
+  </div>
+
+  <script src="../../js/api.js"></script>
+  <script src="../../js/authGuard.js"></script>
+  <script src="../../js/chef.js"></script>
+</body>
+</html>

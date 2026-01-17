@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Product | SweetBite</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/inventory.css">
+    <link rel="stylesheet" href="../../css/product-edit-modal.css">
+</head>
+
+<body>
+
+    <nav class="inventory-navbar">
+        <div class="navbar-inner">
+            <a href="dashboard.html" class="navbar-brand">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"
+                    style="width:24px;height:24px;fill:currentColor;">
+                    <path
+                        d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z" />
+                </svg>
+                SweetBite
+            </a>
+            <div class="navbar-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="add-product.html">Add Product</a>
+                <a href="view-products.html">View Products</a>
+                <a href="../../index.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-main">
+        <h2 class="section-title">Add New Product</h2>
+
+        <div class="form-card">
+            <form id="addProductForm" enctype="multipart/form-data">
+
+                <h3 style="font-size:1.2rem;margin-bottom:24px;color:var(--apple-dark);">Product Details</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Product Name</label>
+                    <input type="text" id="productName" class="form-control" placeholder="e.g., Chocolate Lava Cake"
+                        required>
+                    <div class="invalid-feedback">Product name is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Price (RS)</label>
+                    <input type="number" id="price" class="form-control" step="0.01" min="0" placeholder="0.00"
+                        required>
+                    <div class="invalid-feedback">Price is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Description</label>
+                    <textarea id="description" class="form-control" rows="3"
+                        placeholder="Brief description of the product"></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Category</label>
+                    <select id="category" class="form-control">
+                        <option value="Dessert">Dessert</option>
+                        <option value="Cake">Cake</option>
+                        <option value="Pastry">Pastry</option>
+                        <option value="Ice Cream">Ice Cream</option>
+                        <option value="Beverage">Beverage</option>
+                    </select>
+                </div>
+
+                <div id="addProductImageContainer" class="product-image-container style="
+                    width:160px;height:160px;margin:0;""">
+                    <label class="form-label">Product Image (Optional)</label>
+                    <div class="product-image-icon" style="cursor:pointer;">
+                        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                            <path
+                                d="M21 19V5c0-1.1-.9-2-2-2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2zM8.5 13.5l2.5 3.01L14.5 12l4.5 6H5l3.5-4.5z" />
+                        </svg>
+                    </div>
+                    <img id="addImagePreview" class="product-image-display" style="display:none;">
+                </div>
+
+                <input type="file" id="productImage" name="image" hidden>
+                <p class="upload-hint" style="margin-top:8px;">Click to upload • PNG, JPG, WebP up to 5MB</p>
+
+                <hr style="margin:32px 0;border:none;border-top:1px solid var(--border);">
+
+                <h3 style="font-size:1.2rem;margin-bottom:24px;color:var(--apple-dark);">Stock Details</h3>
+
+                <div class="form-group">
+                    <label class="form-label">Quantity</label>
+                    <input type="number" id="quantity" class="form-control" min="0" placeholder="0" required>
+                    <div class="invalid-feedback">Quantity is required</div>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Unit</label>
+                    <select id="unit" class="form-control">
+                        <option value="pcs">Pieces (pcs)</option>
+                        <option value="kg">Kilograms (kg)</option>
+                        <option value="liters">Liters</option>
+                        <option value="packs">Packs</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label class="form-label">Expiry Date (Optional)</label>
+                    <input type="date" id="expiryDate" class="form-control">
+                </div>
+
+                <button type="submit" class="btn-apple" style="width:100%;margin-top:16px;">Add Product</button>
+            </form>
+
+            <div id="successAlert" class="success-alert d-none" style="display:none;">
+                Product added successfully! ✓
+            </div>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/authGuard.js"></script>
+    <script src="../../js/inventory.js"></script>
+</body>
+
+</html>

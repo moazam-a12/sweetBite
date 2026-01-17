@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Manager Dashboard | SweetBite</title>
+<link rel="stylesheet" href="../../css/global.css">
+<link rel="stylesheet" href="../../css/manager.css">
+</head>
+<body>
+<nav class="manager-navbar">
+<div class="navbar-inner">
+<a href="dashboard.html" class="navbar-brand">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:currentColor;">
+<path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z"/>
+</svg>
+        SweetBite Manager
+</a>
+<div class="navbar-links">
+<a href="dashboard.html">Dashboard</a>
+<a href="users.html">Users</a>
+<a href="inventory.html">Inventory</a>
+<a href="order-management.html">Orders</a>
+<a href="analytics.html">Analytics</a>
+<a href="../../index.html">Logout</a>
+</div>
+</div>
+</nav>
+
+<section class="hero-banner">
+<h1>Manager Dashboard</h1>
+<p>Complete oversight and control of SweetBite operations</p>
+</section>
+
+<div class="container-main">
+<h2 class="section-title">Quick Stats</h2>
+<div class="quick-stats">
+<div class="quick-stat">
+<div class="quick-stat-value" id="totalUsers">0</div>
+<div class="quick-stat-label">Total Users</div>
+</div>
+<div class="quick-stat">
+<div class="quick-stat-value" id="totalProducts">0</div>
+<div class="quick-stat-label">Products</div>
+</div>
+<div class="quick-stat">
+<div class="quick-stat-value" id="totalOrders">0</div>
+<div class="quick-stat-label">Total Orders</div>
+</div>
+<div class="quick-stat">
+<div class="quick-stat-value" id="pendingOrders">0</div>
+<div class="quick-stat-label">Pending Orders</div>
+</div>
+<div class="quick-stat">
+<div class="quick-stat-value" id="lowStockItems">0</div>
+<div class="quick-stat-label">Low Stock</div>
+</div>
+</div>
+
+<h2 class="section-title">Management Modules</h2>
+<div class="dashboard-grid">
+<a href="users.html" class="dashboard-card">
+<div class="dashboard-icon">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/>
+</svg>
+</div>
+<div class="dashboard-card-title">User Management</div>
+<div class="dashboard-card-desc">Create, edit, and manage user accounts and roles</div>
+</a>
+
+<a href="inventory.html" class="dashboard-card">
+<div class="dashboard-icon" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M20 2H4c-1 0-2 .9-2 2v3.01c0 .72.43 1.34 1 1.69V20c0 1.1 1.1 2 2 2h14c.9 0 2-.9 2-2V8.7c.57-.35 1-.97 1-1.69V4c0-1.1-1-2-2-2zM4 6V4h16v2H4zm16 14H4V8h16v12z"/>
+</svg>
+</div>
+<div class="dashboard-card-title">Inventory Control</div>
+<div class="dashboard-card-desc">Manage products, stock levels, and pricing</div>
+</a>
+
+<a href="order-management.html" class="dashboard-card">
+<div class="dashboard-icon" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm-5 14H7v-2h7v2zm3-4H7v-2h10v2zm0-4H7V7h10v2z"/>
+</svg>
+</div>
+<div class="dashboard-card-title">Order Management</div>
+<div class="dashboard-card-desc">View and manage all customer orders</div>
+</a>
+
+<a href="analytics.html" class="dashboard-card">
+<div class="dashboard-icon" style="background: linear-gradient(135deg, #fa709a 0%, #fee140 100%);">
+<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+<path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/>
+</svg>
+</div>
+<div class="dashboard-card-title">Analytics & Reports</div>
+<div class="dashboard-card-desc">View sales data and business insights</div>
+</a>
+</div>
+</div>
+
+<script src="../../js/api.js"></script>
+<script src="../../js/authGuard.js"></script>
+<script src="../../js/manager.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  loadDashboardStats();
+});
+</script>
+</body>
+</html>

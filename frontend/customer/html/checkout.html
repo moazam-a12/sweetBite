@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Checkout | SweetBite</title>
+  <link rel="stylesheet" href="../../css/global.css">
+  <link rel="stylesheet" href="../../css/customer.css">
+</head>
+<body>
+  
+  <nav class="customer-navbar">
+    <div class="navbar-inner">
+      <a href="dashboard.html" class="navbar-brand">
+        <span class="logo-svg">
+          <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:currentColor;">
+            <path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z"/>
+          </svg>
+        </span>
+        SweetBite
+      </a>
+      <div class="navbar-links">
+        <a href="menu.html">Menu</a>
+        <a href="cart.html">Cart</a>
+        <a href="orders.html">Orders</a>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-main">
+    <h2 class="section-title">Checkout</h2>
+
+    <div class="checkout-layout">
+      <div class="checkout-form">
+        <h3 style="margin-bottom:24px;font-size:1.4rem;">Shipping Details</h3>
+        
+        <form id="checkoutForm">
+          <div class="checkout-grid">
+            <div class="form-group form-group-full">
+              <label class="form-label">Full Name</label>
+              <input id="fullName" class="form-control" placeholder="John Doe">
+              <div class="invalid-feedback">Name is required</div>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Phone</label>
+              <input id="phone" class="form-control" placeholder="+1 234 567 8900">
+              <div class="invalid-feedback">Valid phone required</div>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Address Line 1</label>
+              <input id="addressLine1" class="form-control" placeholder="Street address">
+              <div class="invalid-feedback">Address is required</div>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Address Line 2 (Optional)</label>
+              <input id="addressLine2" class="form-control" placeholder="Apartment, suite, etc.">
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">City</label>
+              <input id="city" class="form-control" placeholder="New York">
+              <div class="invalid-feedback">City is required</div>
+            </div>
+
+            <div class="form-group">
+              <label class="form-label">Postal Code</label>
+              <input id="postal" class="form-control" placeholder="10001">
+              <div class="invalid-feedback">Postal code is required</div>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Shipping Method</label>
+              <select id="shippingMethod" class="form-select">
+                <option value="standard">Standard (20-25 mins) - Free</option>
+                <option value="express">Express (10-15 mins) - RS99</option>
+              </select>
+            </div>
+
+            <div class="form-group form-group-full">
+              <label class="form-label">Delivery Notes (Optional)</label>
+              <textarea id="notes" class="form-control" rows="3" placeholder="Leave at door, ring bell, etc." style="resize:vertical;"></textarea>
+            </div>
+          </div>
+
+          <div style="display:flex;gap:12px;margin-top:24px;">
+            <a href="cart.html" class="btn-outline" style="flex:1;text-align:center;">Back to Cart</a>
+            <button type="submit" class="btn-apple" style="flex:1;">Place Order</button>
+          </div>
+        </form>
+      </div>
+
+      <div class="order-summary">
+        <h3 class="summary-title">Order Summary</h3>
+        <div id="checkoutSummary"></div>
+        <div class="summary-total">
+          <span>Total</span>
+          <span id="checkoutTotal">RS0.00</span>
+        </div>
+        <p style="font-size:0.85rem;color:var(--apple-gray);margin-top:16px;">Payment will be collected on delivery</p>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/api.js"></script>
+  <script src="../../js/customer.js"></script>
+</body>
+</html>

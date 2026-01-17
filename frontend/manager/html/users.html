@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Management | SweetBite</title>
+    <link rel="stylesheet" href="../../css/global.css">
+    <link rel="stylesheet" href="../../css/manager.css">
+    <link rel="stylesheet" href="../../css/user-management.css">
+</head>
+<body>
+    <nav class="manager-navbar">
+        <div class="navbar-inner">
+            <a href="dashboard.html" class="navbar-brand">
+                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:24px;height:24px;fill:currentColor;">
+                    <path d="M12 2c-1.1 0-2 .9-2 2s.9 2 2 2 2-.9 2-2-.9-2-2-2zm5.5 7h-11c-.8 0-1.5.7-1.5 1.5v1c0 2.2 1.8 4 4 4h4c2.2 0 4-1.8 4-4v-1c0-.8-.7-1.5-1.5-1.5zM9 16c-.6 0-1 .4-1 1v5c0 .6.4 1 1 1h6c.6 0 1-.4 1-1v-5c0-.6-.4-1-1-1H9z"/>
+                </svg>
+                SweetBite Manager
+            </a>
+            <div class="navbar-links">
+                <a href="dashboard.html">Dashboard</a>
+                <a href="inventory.html">Inventory</a>
+                <a href="users.html">Users</a>
+                <a href="order-management.html">Orders</a>
+                <a href="analytics.html">Analytics</a>
+                <a href="../../index.html">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <section class="hero-banner">
+        <h1>User Management</h1>
+        <p>Manage system users and permissions</p>
+    </section>
+
+    <div class="container-main">
+        <div class="data-table-container">
+            <div class="table-header">
+                <h3 class="table-title">All Users</h3>
+                <button id="openAddUserModal" class="btn-apple">Add New User</button>
+            </div>
+
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Role</th>
+                        <th>Created</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="usersBody">
+                    <tr>
+                        <td colspan="5" style="text-align:center;padding:40px;color:var(--apple-gray);">
+                            Loading users...
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <!-- Add User Modal -->
+    <div class="user-modal-overlay" id="addUserModal">
+        <div class="user-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Add New User</h2>
+                <button class="close-btn" id="closeAddUserModal">&times;</button>
+            </div>
+            <form id="addUserForm">
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="addUsername" class="form-control" placeholder="johndoe" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select id="addRole" class="form-control" required>
+                        <option value="">Select Role</option>
+                        <option value="customer">Customer</option>
+                        <option value="inventory">Inventory</option>
+                        <option value="chef">Chef</option>
+                        <option value="cashier">Cashier</option>
+                        <option value="delivery">Delivery</option>
+                        <option value="manager">Manager</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="addEmail" class="form-control" placeholder="john@example.com" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">New Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="addPassword" class="form-control" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('addPassword', this)">
+                            <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                    <small class="field-hint">Must be at least 8 characters</small>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Confirm Password</label>
+                    <div class="password-input-wrapper">
+                        <input type="password" id="addConfirmPassword" class="form-control" placeholder="••••••••" required>
+                        <button type="button" class="toggle-password" onclick="togglePasswordVisibility('addConfirmPassword', this)">
+                            <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-apple" style="width:100%;margin-top:8px;">Create User</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Edit User Modal -->
+    <div class="user-modal-overlay" id="editUserModal">
+        <div class="user-modal">
+            <div class="modal-header">
+                <h2 class="modal-title">Edit User</h2>
+                <button class="close-btn" id="closeEditUserModal">&times;</button>
+            </div>
+            <form id="editUserForm">
+                <input type="hidden" id="editUserId">
+                
+                <div class="form-group">
+                    <label class="form-label">Username</label>
+                    <input type="text" id="editUsername" class="form-control" required>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Role</label>
+                    <select id="editRole" class="form-control" required>
+                        <option value="customer">Customer</option>
+                        <option value="inventory">Inventory</option>
+                        <option value="chef">Chef</option>
+                        <option value="cashier">Cashier</option>
+                        <option value="delivery">Delivery</option>
+                        <option value="manager">Manager</option>
+                        <option value="pending">Pending</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label class="form-label">Email</label>
+                    <input type="email" id="editEmail" class="form-control" required>
+                </div>
+                
+                <div class="change-password-toggle">
+                    <button type="button" id="changePasswordBtn" onclick="toggleChangePassword()">
+                        Change password?
+                    </button>
+                </div>
+                
+                <div id="changePasswordFields" style="display:none;">
+                    <div class="form-group">
+                        <label class="form-label">New Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="editNewPassword" class="form-control" placeholder="••••••••">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('editNewPassword', this)">
+                                <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                        <small class="field-hint">Must be at least 8 characters</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label">Confirm Password</label>
+                        <div class="password-input-wrapper">
+                            <input type="password" id="editConfirmPassword" class="form-control" placeholder="••••••••">
+                            <button type="button" class="toggle-password" onclick="togglePasswordVisibility('editConfirmPassword', this)">
+                                <svg class="eye-icon" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                                </svg>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-apple" style="width:100%;margin-top:8px;">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="../../js/api.js"></script>
+    <script src="../../js/authGuard.js"></script>
+    <script src="../../js/manager.js"></script>
+    <script src="../../js/user-management.js"></script>
+</body>
+</html>
