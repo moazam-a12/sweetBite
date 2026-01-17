@@ -1,0 +1,35 @@
+{
+  "name": "sweetbite",
+  "version": "1.0.0",
+  "description": "A comprehensive dessert shop management system with role-based access control",
+  "main": "backend/server.js",
+  "scripts": {
+    "start": "cd backend && npm start",
+    "dev": "cd backend && npm run dev",
+    "install-backend": "cd backend && npm install",
+    "setup": "./setup.sh"
+  },
+  "keywords": [
+    "restaurant-management",
+    "dessert-shop",
+    "order-management",
+    "role-based-access",
+    "nodejs",
+    "express",
+    "mongodb",
+    "inventory-management"
+  ],
+  "author": "Your Name",
+  "license": "ISC",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/yourusername/SweetBite.git"
+  },
+  "bugs": {
+    "url": "https://github.com/yourusername/SweetBite/issues"
+  },
+  "homepage": "https://github.com/yourusername/SweetBite#readme",
+  "engines": {
+    "node": ">=14.0.0"
+  }
+}
