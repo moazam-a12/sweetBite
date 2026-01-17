@@ -2,7 +2,7 @@ const { exec } = require('child_process');
 const path = require('path');
 
 // MongoDB connection string (replace <username>, <password>, <cluster>, <dbname>)
-const uri = process.env.MONGO_URI || 'mongodb+srv://moazam624:MCS624@sweetbite.teuce4y.mongodb.net/sweetbite';
+const uri = process.env.MONGO_URI || 'mongodb+srv://<username>:<password>@sweetbite.teuce4y.mongodb.net/sweetbite';
 
 // Output folder (Downloads folder)
 const outputDir = path.join(require('os').homedir());
